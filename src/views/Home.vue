@@ -14,7 +14,7 @@ import { ref } from 'vue';
                 <h1>Bienvenue sur Currency</h1>
                 <h5>Votre plateforme de conversion de devises du monde entier</h5>
                 <div class="banner__btn">
-                    <a href="Login">S'INSCRIRE</a>
+                    <a href="Login">SE CONNECTER</a>
                 </div>
             </div>
             <div class="banner__top__right">

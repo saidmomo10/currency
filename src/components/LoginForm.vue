@@ -16,7 +16,7 @@ async function login() {
     })
 
     const localUser = await supabase.auth.getSession();
-    console.log(localUser)
+    // console.log(localUser.data.session?.user.email)
 
     if(error){
         console.log(error)

@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import {supabase} from '@/clients/supabase'
 import router from '@/router';
-// import UserName from './UserName.vue'
+import UserName from './UserName.vue'
 import LogoutButton from '../components/LogoutButton.vue';
 
 
@@ -20,7 +20,7 @@ import LogoutButton from '../components/LogoutButton.vue';
                     <li class="header__menu__item"><a href="/UserPage">ACCUEIL</a></li>
                     <li class="header__menu__item"><a href="CurrencyHistory">CONVERTIR</a></li>
                     <li class="header__menu__item"><a href="CurrencyPage">TAUX RÉCENTS</a></li>
-                    <!-- <li class="header__menu__item"><UserName/></li> -->
+                    <li class="header__menu__item"><UserName/></li>
                     <li class="header__menu__item"><LogoutButton/></li>
                     <!-- <li class="header__menu__item"><a href="../connection.html">SE DECONNECTER</a></li> -->
                     <li class="mail"></li>

@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import NavBar from '@/components/NavBar.vue';
 
 
+
 </script>
 
 <template>
@@ -13,7 +14,6 @@ import NavBar from '@/components/NavBar.vue';
                     <h1>L'univers des devises s'ouvre à vous</h1>
                     <div class="banner__btn">
                         <a href="CurrencyHistory">COMMENCER</a>
-                        
                     </div>
             </div>
             <div class="banner__top__right">

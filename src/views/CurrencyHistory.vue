@@ -8,7 +8,6 @@
                 <button @click="openModal">Historique des Conversions</button>
 
             </div>
-            
             <div class="form">
                 <CurrencyForm @submit ="createHistory"/>
             </div>
@@ -24,6 +23,7 @@
                             <th>Montant saisi</th>
                             <th>Devise de départ</th>
                             <th>Devise d'arrivée</th>
+                            <th>ID Utilisateurs</th>
                         </thead>
                         <tbody>
                             <tr v-for="element in historique">
@@ -32,6 +32,7 @@
                                 <td>{{element.depart_value}}</td>
                                 <td>{{element.first_currency }}</td>
                                 <td>{{element.second_currency}}</td>
+                                <td>{{ element.user_id }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -52,13 +53,19 @@
     import CurrencyForm from '@/components/CurrencyForm.vue';
     import { ref } from 'vue';
 
-    const {initialise, addHistory} = useHistoryStore()
+
+    const {initialise, hiddenHistory, addHistory} = useHistoryStore()
     const {historique} = storeToRefs(useHistoryStore())
 
     const createHistory = async (historical) =>{
         await addHistory(historical)
     }
 
+    const hiddeHistory = async () =>{
+        await hiddenHistory()
+    }
+    hiddeHistory()
+    
     onMounted(async() =>{
         await initialise()
     })
@@ -85,13 +92,19 @@
     const closeModal = () => {
     isModalOpen.value = false;
     };
+
+    // const isTable = ref(false);
+
+    // const openModal = () => {
+    // isModalOpen.value = true;
+    // };
+
+    // const closeModal = () => {
+    // isModalOpen.value = false;
+    // };
 </script>
 
-<style>
-
-main{
-    /* background: url(../assets/img/photo_5960770744461933738_y.jpg); */
-}
+<style scoped>
 
 button{
   padding: 6px;
