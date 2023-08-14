@@ -61,3 +61,5 @@ export const useHistoryStore = defineStore('CurrencyHistory',()=> {
     return {historique, initialise, hiddenHistory, addHistory};
 })
 
+
+

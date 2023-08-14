@@ -6,11 +6,12 @@
                 <h1>CONVERSION</h1>
                 <h5>Convertissez vos monnaies selon la/les devises voulue(s)</h5>
                 <button @click="openModal">Historique des Conversions</button>
-
             </div>
             <div class="form">
                 <CurrencyForm @submit ="createHistory"/>
             </div>
+            
+            
 
             <div class="history">
                 
@@ -23,16 +24,14 @@
                             <th>Montant saisi</th>
                             <th>Devise de départ</th>
                             <th>Devise d'arrivée</th>
-                            <th>ID Utilisateurs</th>
                         </thead>
-                        <tbody>
-                            <tr v-for="element in historique">
+                        <tbody v-for="element in historique">
+                            <tr v-if="element.user_id == userId">
                                 <td>{{element.id}}</td>
                                 <td>{{element.created_at}}</td>
                                 <td>{{element.depart_value}}</td>
                                 <td>{{element.first_currency }}</td>
                                 <td>{{element.second_currency}}</td>
-                                <td>{{ element.user_id }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -43,15 +42,29 @@
             
         </div>
     </main>
+    <Footer/>
 </template>
 
 <script setup lang = "ts">
     import NavBar from '@/components/NavBar.vue';
+    import Footer from '@/components/Footer.vue';
     import { useHistoryStore } from '@/stores/CurrencyHistory';
     import { storeToRefs } from 'pinia';
     import { onMounted } from 'vue';
     import CurrencyForm from '@/components/CurrencyForm.vue';
     import { ref } from 'vue';
+    import {supabase} from '@/clients/supabase'
+
+    const userId = ref('')
+    async function getUser(){
+        const user = await supabase.auth.getUser();
+      
+    userId.value = user.data.user?.id;
+     
+     console.log(userId.value);
+    }
+
+    getUser()
 
 
     const {initialise, hiddenHistory, addHistory} = useHistoryStore()
@@ -106,6 +119,13 @@
 
 <style scoped>
 
+main{
+    background: url(../assets/img/photo_5965392090617724475_y.jpg);
+    background-size: cover;
+    padding: 50px;
+    min-height: 100vh;
+}
+
 button{
   padding: 6px;
   border: #f8ab40 solid 1px;
@@ -121,6 +141,22 @@ button{
 .head h5{
     margin-top: 30px;
 }
+
+button{
+        border: solid 1px rgb(141, 141, 141);
+        background: #f8ab40;
+        padding: 10px 10px 10px 10px;
+        border-radius: 10px;
+        color: #444854;
+        font-weight: 900;
+        cursor: pointer;
+    }
+
+    button:hover{
+      background: #444854;
+      color: #f8ab40;
+    }
+    
 .form{
     padding-top: 50px;
    text-align: center;

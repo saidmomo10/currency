@@ -64,11 +64,9 @@ button:hover{
     gap: 20px;
 }
 
-.header__logo p{
-    color: #444854;
-    font-size: 25px;
-    display: block;
-    font-weight: 900;
+
+.header__logo img{
+    width: 200px;
 }
 
 .header__menu{

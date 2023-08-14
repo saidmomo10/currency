@@ -1,7 +1,7 @@
 <template>
     <footer>
         <div class="footer__content">
-            <p>© TRAOFIN,Tous droits réservés.</p>
+            <p>© CURRENCY, Tous droits réservés.</p>
         </div>
     </footer>
 </template>

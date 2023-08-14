@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import NavBar from '@/components/NavBar.vue';
-import ChangeIcon from './icons/ChangeIcon.vue';
 
 
 import { ref } from 'vue'
-
+const equal = ref('')
 
 const emits = defineEmits(['submit'])
-
+  
     const historyData = ref({
     depart_value: "",
     first_currency: "",
@@ -23,36 +22,38 @@ const emits = defineEmits(['submit'])
     const total = ref("");
 
     const submitForm = () =>{
+      
       emits ('submit', historyData.value)
       getvalConvert()
       historyValue.value.depart_value = historyData.value.depart_value;
       historyValue.value.first_currency = historyData.value.first_currency;
       historyValue.value.second_currency = historyData.value.second_currency;
+      equal.value = '='
 
     }
 
     const currencyCodes = ref([]);
-
+    
     async function getvalConvert(){
       const amountVal = ref('')
       amountVal.value = historyData.value.depart_value;
-    if(amountVal.value == "" || amountVal.value == "0"){
-        historyData.value.depart_value = "1";
-        amountVal.value = 1;
+      // if(amountVal.value == "" || amountVal.value == "0"){
+      //     historyData.value.depart_value = "1";
+      //     amountVal.value = 1;
+      // }
+      
+      let url = `https://v6.exchangerate-api.com/v6/b1de636b25d126b07af975c3/latest/${historyData.value.first_currency}`;
+      
+      fetch(url).then(response => response.json()).then(result =>{
+      let valConvert = result.conversion_rates[historyData.value.second_currency];
+          console.log(result);
+          
+      total.value = (amountVal.value * valConvert).toFixed(2);
+      console.log(total.value);
+      
+      }).catch(() =>{
+      });
     }
-    
-    let url = `https://v6.exchangerate-api.com/v6/b1de636b25d126b07af975c3/latest/${historyData.value.first_currency}`;
-    
-    fetch(url).then(response => response.json()).then(result =>{
-    let valConvert = result.conversion_rates[historyData.value.second_currency];
-        console.log(result);
-        
-    total.value = (amountVal.value * valConvert).toFixed(2);
-    console.log(total.value);
-    
-    }).catch(() =>{
-    });
-}
 
 getvalConvert()
 
@@ -69,6 +70,7 @@ async function getCountryList(){
     }).catch (()=> {
         
       });
+      
     }
 getCountryList()
 
@@ -101,7 +103,8 @@ getCountryList()
         <button style="border: #444854 solid 1px;" type="submit">Convertir</button>
       </form>
       <div class="result">
-        <p>{{ total }} {{ historyValue.second_currency }}</p>
+        <h4>Résultat :</h4>
+        <p>{{ historyData.depart_value }} {{ historyValue.first_currency }} {{ equal }} {{ total }} {{ historyValue.second_currency }}</p>
       </div>
     </div>
   </main>
@@ -110,6 +113,7 @@ getCountryList()
 </template>
 
 <style scoped>
+
   .convert_form{
     display: flex;
     align-items: center;
@@ -117,12 +121,13 @@ getCountryList()
     flex-wrap: wrap;
   }
   form{
+    border-radius: 20px;
     text-align: center;
     display: flex;
     flex-direction: column;
     gap: 40px;
     animation: haut 2s ease-out;
-    background: #f8ab40;
+    border: solid #444854 2px;
     padding: 50px;
   }
 
@@ -139,6 +144,9 @@ getCountryList()
   form input{
       height: 40px;
       width: 250px;
+      border-radius: 10px;
+      border: #444854 solid 1px;
+
   }
 
   form input::placeholder{
@@ -150,15 +158,38 @@ getCountryList()
     height: 50px;
     background: none;
     border: none;
-    border: solid 1px;
+    border-radius: 10px;
+    border: #444854 solid 1px;
   }
 
+  button{
+        border: solid 1px rgb(141, 141, 141);
+        background: #f8ab40;
+        padding: 10px 10px 10px 10px;
+        border-radius: 10px;
+        color: #444854;
+        font-weight: 900;
+        cursor: pointer;
+    }
+
+    button:hover{
+      background: #444854;
+      color: #f8ab40;
+    }
+
   .result{
-    
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
   }
 
   .result p{
     font-size: 50px;
     font-weight: 900;
+  }
+
+  .result h4{
+    font-size: 30px;
+    color: #f8ab40;
   }
 </style>

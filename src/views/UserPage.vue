@@ -26,7 +26,7 @@ import NavBar from '@/components/NavBar.vue';
 <style scoped>
   main{
     height: 100vh;
-    background: url(../assets/img/argent-calculatrice-bloc-notes-espace-copie-fond-orange.jpg);
+    background: url(../assets/img/photo_5965392090617724475_y.jpg);
     background-size: cover;
   }
 

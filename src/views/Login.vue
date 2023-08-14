@@ -74,7 +74,7 @@ function clearErrors() {
                             <div class="icon">
                                 <PassIcon/>
                             </div>
-                            <input type="text" placeholder="Votre mot de passe" v-model="password">
+                            <input type="password" placeholder="Votre mot de passe" v-model="password">
                         </div>
                         <p class="login_error">{{ passwordError }}</p>
                         <p class="login_error">{{ loginError }}</p>
@@ -100,6 +100,10 @@ function clearErrors() {
         text-align: center;
         font-size: 4rem;
         margin-top: 40px;
+    }
+
+    input{
+        outline: none;
     }
 
     .head{
@@ -189,7 +193,7 @@ function clearErrors() {
     }
 
     button:hover{
-        color: white;
+        color: #f8ab40;
         background: #444854;
     }
 </style>
