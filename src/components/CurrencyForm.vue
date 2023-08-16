@@ -104,7 +104,7 @@ getCountryList()
       </form>
       <div class="result">
         <h4>Résultat :</h4>
-        <p>{{ historyData.depart_value }} {{ historyValue.first_currency }} {{ equal }} {{ total }} {{ historyValue.second_currency }}</p>
+        <p> {{ total }} {{ historyValue.second_currency }}</p>
       </div>
     </div>
   </main>
