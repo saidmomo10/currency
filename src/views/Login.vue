@@ -190,6 +190,7 @@ function clearErrors() {
         color: #444854;
         font-weight: 900;
         cursor: pointer;
+        width: 100%;
     }
 
     button:hover{

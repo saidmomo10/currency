@@ -15,6 +15,7 @@ import { ref } from 'vue';
                 <h5>Votre plateforme de conversion de devises du monde entier</h5>
                 <div class="banner__btn">
                     <a href="Login">SE CONNECTER</a>
+                    <a href="SignUp">S'INSCRIRE</a>
                 </div>
             </div>
             <div class="banner__top__right">
