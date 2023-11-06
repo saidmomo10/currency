@@ -1,21 +1,31 @@
 <template>
-    <button @click="logout">SE DECONNECTER</button>
+    <button @click="logout">Déconnexion</button>
 </template>
 
 <script setup lang="ts">
-    import { ref } from 'vue';
-    import {supabase} from '@/clients/supabase'
     import router from '@/router';
-
+    const accessToken = localStorage.getItem('accessToken');
     async function logout(){
-    const{error} = await supabase.auth.signOut();
+    
+    localStorage.removeItem('accessToken');
+    router.replace('/login');
 
-    if(error){
-        console.log(error)
-    }
-    else{
-        console.log('Déconnecté(e) avec succès');
-        router.replace('/')
-    }
 }
 </script>
+
+<style scoped>
+    button{
+    border: solid 1px rgb(141, 141, 141);
+    padding: 10px 10px 10px 10px;
+    border-radius: 90px;
+    color: white;
+    font-weight: 900;
+    background-color: #CC1E27;
+    cursor: pointer;
+}
+
+button:hover{
+  background: #B42B32;
+  border: #444854;
+}
+</style>

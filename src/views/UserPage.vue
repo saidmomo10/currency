@@ -1,23 +1,64 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import axios from 'axios';
+
 import NavBar from '@/components/NavBar.vue';
+import router from '@/router';
 
+const clientHttp = axios.create(
+    {
+        baseURL: "http://localhost:3000/api/",
+        headers: {
+            Accept: "application/json",
+        }
+    }
+)
 
+const userdata = ref({
+    email: '',
+    password: '',
+})
+
+const accessToken = localStorage.getItem('accessToken');
+console.log(accessToken);
+
+const user = async ()=>{
+    if (accessToken){
+        try{
+            const response = await clientHttp.get('/UserPage', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      }
+      })
+      console.log(response);
+      
+            if(response.status === 200){
+                userdata.value.email = response.data.email
+            }
+        } catch(error){
+            console.log(error);
+            
+        }
+    } else{
+        router.replace('/Login')
+    }
+}
+user()
 
 </script>
 
 <template>
     <NavBar/>
-  <main>
+    <main>
     <div class="banner">
             <div class="banner__top__left">
-                    <h1>L'univers des devises s'ouvre à vous</h1>
+                    <h1>L'univers des devises <br> s'ouvre à vous</h1>
                     <div class="banner__btn">
                         <a href="CurrencyHistory">COMMENCER</a>
                     </div>
             </div>
             <div class="banner__top__right">
-
+                <img src="../assets/img/coins-1015125_1280.png" alt="">
             </div>
         </div>
   </main>
@@ -26,8 +67,8 @@ import NavBar from '@/components/NavBar.vue';
 <style scoped>
   main{
     height: 100vh;
-    background: url(../assets/img/photo_5965392090617724475_y.jpg);
-    background-size: cover;
+    /* background: url(../assets/img/photo_5965392090617724475_y.jpg);
+    background-size: cover; */
   }
 
   .banner{
@@ -37,12 +78,16 @@ import NavBar from '@/components/NavBar.vue';
     gap: 45px;
     align-items: center;
     text-align: center;
-    height: 81.1vh;
+    height: 100vh;
     padding-top: 0px;
+    background-image: url(../assets/img/Pathimg.png);
+    background-position: right;
+    background-size: 700px;
+    background-repeat: no-repeat;
 }
 
 .banner__top__left{
-    width: calc(100% - 450px);
+    width: calc(80% - 450px);
     /* padding-left: 70px; */
     animation: gauche 2s ease-out;
 }
@@ -92,18 +137,21 @@ import NavBar from '@/components/NavBar.vue';
 .banner__btn a{
     border: solid 1px rgb(141, 141, 141);
     padding: 10px 10px 10px 10px;
-    border-radius: 10px;
+    border-radius: 90px;
     color: white;
     font-weight: 900;
+    background-color: #505F98;
 }
 
 .banner__btn a:hover{
-    background-color: #1c2e33;
+background-color: #5C699E;
+;
 }
 
 .banner__top__right img{
     width: 500px;
     animation: droite 3s ease-out;
+    
 }
 
 @keyframes droite{

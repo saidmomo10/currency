@@ -13,10 +13,11 @@
     "@everapi/freecurrencyapi-js": "^1.0.1",
     "@supabase/supabase-js": "^2.32.0",
     "@vueuse/core": "^10.3.0",
-    "axios": "^1.4.0",
+    "axios": "^1.5.1",
     "pinia": "^2.1.4",
     "vue": "^3.3.4",
-    "vue-router": "^4.2.4"
+    "vue-router": "^4.2.4",
+    "vue-toasted": "^1.1.28"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.0",

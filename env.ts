@@ -1,4 +1,4 @@
 
-export const SUPABASE_URL = "https://rdtskcpdaqcasqyvhdot.supabase.co"
+// export const SUPABASE_URL = "https://rdtskcpdaqcasqyvhdot.supabase.co"
 
-export const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkdHNrY3BkYXFjYXNxeXZoZG90Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTE0Mjg2NzQsImV4cCI6MjAwNzAwNDY3NH0.OEV7fOpByS_2U0JRKPFkvtJNtdPIlEokAiNxR4eVOEg"
+// export const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkdHNrY3BkYXFjYXNxeXZoZG90Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTE0Mjg2NzQsImV4cCI6MjAwNzAwNDY3NH0.OEV7fOpByS_2U0JRKPFkvtJNtdPIlEokAiNxR4eVOEg"

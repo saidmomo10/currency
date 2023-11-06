@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import {supabase} from '@/clients/supabase'
 import router from '@/router';
 import UserName from './UserName.vue'
 import LogoutButton from '../components/LogoutButton.vue';
-
-
 
 </script>
 
@@ -16,12 +13,16 @@ import LogoutButton from '../components/LogoutButton.vue';
                 <a class="header__logo" href="/UserPage">
                     <p>CURRENCY</p>
                 </a>
-                <ul class="header__menu">
-                    <li class="header__menu__item"><a href="/UserPage">ACCUEIL</a></li>
-                    <li class="header__menu__item"><a href="CurrencyHistory">CONVERTIR</a></li>
-                    <li class="header__menu__item"><a href="CurrencyPage">TAUX RÉCENTS</a></li>
-                    <li class="header__menu__item"><UserName/></li>
-                    <li class="header__menu__item"><LogoutButton/></li>
+                <ul>
+                    <div class="header__menu">
+                        <li class="header__menu__item"><a href="/UserPage">ACCUEIL</a></li>
+                        <li class="header__menu__item"><a href="CurrencyHistory">CONVERTIR</a></li>
+                        <li class="header__menu__item"><a href="/CurrencyPage">TAUX RÉCENTS</a></li>
+                    </div>
+                    <div class="header__menu">
+                        <li class="header__menu__item"><UserName/></li>
+                        <li class="header__menu__item"><LogoutButton/></li>
+                    </div>
                     <!-- <li class="header__menu__item"><a href="../connection.html">SE DECONNECTER</a></li> -->
                     <li class="mail"></li>
                 </ul>
@@ -35,26 +36,18 @@ import LogoutButton from '../components/LogoutButton.vue';
 </template>
 
 <style scoped>
+
+@import url('https://fonts.googleapis.com/css2?family=Griffy&family=Hanken+Grotesk&family=Mooli&family=Varela+Round&display=swap');
     .header{
     z-index: 100;
     background: white;
     width: 100%;
-    height: 100%;
+    height: 100px;
+    padding-top: 20px;
     box-shadow: #e7e4e4 1px 1px 8px;
 }
 
-button{
-  padding: 6px;
-  border: #f8ab40 solid 1px;
-  background: none;
-  cursor: pointer;
-}
 
-button:hover{
-  background: #f8ab40;
-  color: #444854;
-  border: #444854;
-}
 .header__content{
     display: flex;
     justify-content: space-between;
@@ -65,8 +58,15 @@ button:hover{
 }
 
 
-.header__logo img{
-    width: 200px;
+.header__logo p{
+    font-size: 25px;
+    font-weight: 500;
+    font-family: "Griffy" ;
+}
+
+ul{
+    display: flex;
+    gap: 70px;
 }
 
 .header__menu{
@@ -87,11 +87,11 @@ button:hover{
 }
 
 .header__menu__item a{
-    color: #1c2e33;
+    color: #505F98;
     font-weight: 900;
 }
 
 .header__menu__item a:hover{
-    color: #f8ab40;
+    color: #D47C00;
 }
 </style>

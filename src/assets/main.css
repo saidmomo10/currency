@@ -34,8 +34,7 @@ a,
   }
 } */
 
-@import url('https://fonts.googleapis.com/css2?family=Geologica:wght@300&family=Playfair+Display:wght@600&family=Rubik&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk&family=Mooli&family=Varela+Round&display=swap');
 
 *{
   position:relative;
@@ -43,7 +42,7 @@ a,
   padding:0;
   z-index: 5;
   font-size: 14px;
-  font-family: 'Geologica', sans-serif;    
+  font-family: 'Hanken Grotesk', sans-serif;
   box-sizing: border-box;
   line-height: 25px;
 }
@@ -60,6 +59,14 @@ ul li{
 .container{
   max-width: calc(90% - 100px);
   margin: 0 auto;
+}
+
+input{
+  outline: none;
+}
+
+input:placeholder-shown{
+  outline: none;
 }
 
 h1{

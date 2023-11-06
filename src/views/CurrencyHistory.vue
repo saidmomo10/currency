@@ -5,7 +5,8 @@
             <div class="head">
                 <h1>CONVERSION</h1>
                 <h5>Convertissez vos monnaies selon la/les devises voulue(s)</h5>
-                <button @click="openModal">Historique des Conversions</button>
+                <!-- <button @click="openModal">Historique des Conversions</button> -->
+                <button><router-link :to="{path: `/users/${userdata.email}/history`}">Voir l'historique</router-link></button>
             </div>
             <div class="form">
                 <CurrencyForm @submit ="createHistory"/>
@@ -25,20 +26,21 @@
                             <th>Devise de départ</th>
                             <th>Devise d'arrivée</th>
                         </thead>
-                        <tbody v-for="element in historique">
-                            <tr v-if="element.user_id == userId">
-                                <td>{{element.id}}</td>
-                                <td>{{element.created_at}}</td>
-                                <td>{{element.depart_value}}</td>
-                                <td>{{element.first_currency }}</td>
-                                <td>{{element.second_currency}}</td>
+                        <tbody v-for="element in historydata">
+                            <tr>
+                    
+                                <td>{{element._id}}</td>
+                                <td>{{element.createdAt}}</td>
+                                <td>{{element.departValue}}</td>
+                                <td>{{element.firstCurrency }}</td>
+                                <td>{{element.secondCurrency}}</td>
                             </tr>
                         </tbody>
                     </table>
                 <a @click="closeModal"></a>
                 </div>
             </div>
-            
+            <h1>{{ historydata.firstCurrency }}</h1>
             
         </div>
     </main>
@@ -47,48 +49,62 @@
 
 <script setup lang = "ts">
      import NavBar from '@/components/NavBar.vue';
-    import Footer from '@/components/Footer.vue';
-    import { useHistoryStore } from '@/stores/CurrencyHistory';
-    import { storeToRefs } from 'pinia';
-    import { onMounted } from 'vue';
+    import Footer from '@/components/Footer.vue'; 
     import CurrencyForm from '@/components/CurrencyForm.vue';
+    import axios from 'axios';
+    // import router from '@/router';
+    import { useRouter } from  'vue-router'
+    import { useRoute } from 'vue-router'
     import { ref } from 'vue';
-    import {supabase} from '@/clients/supabase'
 
     const userId = ref('')
-    async function getUser(){
-        const user = await supabase.auth.getUser();
+
+    const clientHttp = axios.create(
+    {
+        baseURL: "http://localhost:3000/api/",
+        headers: {
+            Accept: "application/json",
+        }
+    }
+)
+
+const userdata = ref({
+    email: '',
+    password: '',
+})
+
+const historydata = ref([])
+
+const accessToken = localStorage.getItem('accessToken');
+console.log(accessToken);
+
+const user = async ()=>{
+    if (accessToken){
+        try{
+            const response = await clientHttp.get('/UserPage', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      }
+      })
+      console.log(response);
       
-    userId.value = user.data.user?.id;
-     
-     console.log(userId.value);
+            if(response.status === 200){
+                userdata.value.email = response.data.email
+            }
+        } catch(error){
+            console.log(error);
+            
+        }
     }
-
-    getUser()
-
-
-    const {initialise, hiddenHistory, addHistory} = useHistoryStore()
-    const {historique} = storeToRefs(useHistoryStore())
-
-    const createHistory = async (historical) =>{
-        await addHistory(historical)
-    }
-
-    const hiddeHistory = async () =>{
-        await hiddenHistory()
-    }
-    hiddeHistory()
-    
-    onMounted(async() =>{
-        await initialise()
-    })
+}
+user()
 
     const emits = defineEmits(['submit'])
 
     const historyData = ref({
-    depart_value: "",
-    first_currency: "",
-    second_currency: "",
+    departValue: "",
+    firstCurrency: "",
+    secondCurrency: "",
     })
 
     const submitForm = () =>{
@@ -120,18 +136,13 @@
 <style scoped>
 
 main{
-    background: url(../assets/img/photo_5965392090617724475_y.jpg);
-    background-size: cover;
+    background-image: url(../assets/img/Pathimg.png);
+    background-repeat: no-repeat;
+    background-position: right;
     padding: 50px;
     min-height: 100vh;
 }
 
-button{
-  padding: 6px;
-  border: #f8ab40 solid 1px;
-  background: none;
-  cursor: pointer;
-}
 
 .head{
     text-align: center;
@@ -150,11 +161,6 @@ button{
         color: #444854;
         font-weight: 900;
         cursor: pointer;
-    }
-
-    button:hover{
-      background: #444854;
-      color: #f8ab40;
     }
     
 .form{

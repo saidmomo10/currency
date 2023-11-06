@@ -5,8 +5,6 @@ import axios from 'axios';
 
 
    
-        
-
 
 type History = {
     id? : number;

@@ -1,53 +1,140 @@
 <script setup lang="ts">
 import MailIcon from '../components/icons/MailIcon.vue';
-import PassIcon from '../components/icons/PassIcon.vue'
-import {supabase} from '../clients/supabase'
-
-import { ref } from 'vue';
+import PassIcon from '../components/icons/PassIcon.vue';
+import axios from 'axios';
 import router from '@/router';
+import { ref } from 'vue';
 
-let email = ref('')
-let password = ref('')
-const loginError = ref('')
+
+const clientHttp = axios.create(
+    {
+        baseURL: "http://localhost:3000/api/",
+        headers: {
+            Accept: "application/json",
+        }
+    }
+)
+
 let emailError = ref('');
 let passwordError = ref('');
 
-async function login() {
-    clearErrors()
-    if (!email.value) {
-    emailError.value = 'Veuillez entrer votre adresse e-mail';
-    return;
-  }
+const userdata = ref({
+    email: '',
+    password: '',
+})
 
-  if (!password.value) {
-    passwordError.value = 'Veuillez entrer votre mot de passe';
-    return;
-  }
+// const isFormValid = computed(() => {
+//   return userdata.value.name && userdata.value.password && userdata.value.age > 0;
+// });
 
-    const {data,error} = await supabase.auth.signInWithPassword({
-        email: email.value,
-        password: password.value
-    })
+async function login(){
+    //     if (!isFormValid.value) {
+    //     return;
+    //   }
+    // clearErrors()
 
-    const localUser = await supabase.auth.getSession();
-    // console.log(localUser.data.session?.user.email)
+    if (!userdata.value.email) {
+        emailError.value = 'Veuillez entrer votre adresse e-mail';
+        return;
+    }
+
+    if (!userdata.value.password) {
+        passwordError.value = 'Veuillez entrer votre mot de passe';
+        return;
+    }
+
+        try {
+            const user = await clientHttp.post('/login', userdata.value);
+            console.log(user);
+            localStorage.setItem('accessToken', user.data.accessToken);
+            router.replace('/UserPage');
+        }catch(error){
+            console.log(error);
+        }
+}
+
+const accessToken = localStorage.getItem('accessToken');
+if(accessToken){
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}` 
+}
+
+// function clearErrors() {
+//   nameError.value = '';
+//   passwordError.value = '';
+// }
+
+
+
+
+
+
+
+
+
+
+// import MailIcon from '../components/icons/MailIcon.vue';
+// import PassIcon from '../components/icons/PassIcon.vue'
+// import {supabase} from '../clients/supabase'
+// import axios from 'axios';
+// import { ref } from 'vue';
+// import router from '@/router';
+
+// let name = ref('')
+// let password = ref('')
+// let age = ref('')
+// const loginError = ref('')
+
+// let user = ref('');
+
+
+
+// async function login() {
+
+//     const postUser = () => {
+//       axios
+//         .post("http://localhost:3000/api/login", {name, password, age})
+//         .then((response) => {
+//           user = response.data.results; // 👈 get just results
+//         });
+//     };
+
+//     postUser();
+
+//     clearErrors()
+//     if (!email.value) {
+//     emailError.value = 'Veuillez entrer votre adresse e-mail';
+//     return;
+//   }
+
+//   if (!password.value) {
+//     passwordError.value = 'Veuillez entrer votre mot de passe';
+//     return;
+//   }
+
+//     const {data,error} = await supabase.auth.signInWithPassword({
+//         email: email.value,
+//         password: password.value
+//     })
+
+//     const localUser = await supabase.auth.getSession();
+//     // console.log(localUser.data.session?.user.email)
     
-    if(error){
+//     if(error){
         
         
-        loginError.value = 'Email ou Mot de passe invalide'
-        console.log(loginError.value)
-    }
-    else{
-        console.log(data);
-        router.replace('/UserPage')
-    }
-}
-function clearErrors() {
-  emailError.value = '';
-  passwordError.value = '';
-  loginError.value = '';
-}
+//         loginError.value = 'Email ou Mot de passe invalide'
+//         console.log(loginError.value)
+//     }
+//     else{
+//         console.log(data);
+//         router.replace('/UserPage')
+//     }
+// }
+// function clearErrors() {
+//   emailError.value = '';
+//   passwordError.value = '';
+//   loginError.value = '';
+// }
 </script>
 
 <template>
@@ -67,17 +154,19 @@ function clearErrors() {
                             <div class="icon">
                                 <MailIcon/>
                             </div>
-                            <input type="text" placeholder="Votre mail" v-model="email">
+                            <input type="text" placeholder="Votre mail" v-model="userdata.email">
                         </div>
                         <p class="login_error">{{ emailError }}</p>
                         <div class="mail">
                             <div class="icon">
                                 <PassIcon/>
                             </div>
-                            <input type="password" placeholder="Votre mot de passe" v-model="password">
+                            <input type="password" placeholder="Votre mot de passe" v-model="userdata.password">
                         </div>
                         <p class="login_error">{{ passwordError }}</p>
-                        <p class="login_error">{{ loginError }}</p>
+
+                        <!-- <p class="login_error">{{ passwordError }}</p>
+                        <p class="login_error">{{ loginError }}</p> -->
                     </form>
                     
                     <button @click = "login">Se connecter</button>

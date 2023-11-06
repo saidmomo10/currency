@@ -2,14 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import SignUp from '../views/SignUp.vue'
-import UserPage from '@/views/UserPage.vue'
-import {supabase} from '../clients/supabase.js'
-let localUser;
-
-// import CurrencyPage from '../views/CurrencyPage.vue'
+import UserPage from '../views/UserPage.vue'
 import CurrencyHistory from '../views/CurrencyHistory.vue'
-import Profile from '../views/Profile.vue'
-import Profile2 from '../views/Profile2.vue'
+import CurrencyPage from '../views/CurrencyPage.vue'
+import History from '../views/History.vue'
+
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,7 +21,7 @@ const router = createRouter({
     {
       path: '/UserPage',
       name: 'UserPage',
-      component: () => import('../views/UserPage.vue'),
+      component: UserPage,
       meta:{requiresAuth: true}
     },
 
@@ -42,43 +40,31 @@ const router = createRouter({
     {
       path: '/CurrencyHistory',
       name: 'currencyHistory',
-      component: CurrencyHistory
+      component: CurrencyHistory,
+      meta:{requiresAuth: true}
     },
 
     {
-      path: '/Profile',
-      name: 'profile',
-      component: Profile
+      path: '/CurrencyPage',
+      name: 'currencyPage',
+      component: CurrencyPage,
+      meta:{requiresAuth: true}
     },
 
     {
-      path: '/Profile2',
-      name: 'profile2',
-      component: Profile2
+      path: '/users/:email/history',
+      component: History,
     },
     
   ]
 })
 
-async function getUser(next){
-  localUser = await supabase.auth.getSession();
-  console.log(localUser.data.session);
-  
-  if (localUser.data.session == null){
-    next('/Login')
-  }
-  else{
-    next()
-  }
-}
-
-router.beforeEach((to, from, next) =>{
-  if(to.meta.requiresAuth){
-    getUser(next);
-  }
-  else{
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth && !localStorage.getItem('accessToken')) {
+    next('/UserPage');
+  } else {
     next();
   }
-})
+});
 
 export default router
