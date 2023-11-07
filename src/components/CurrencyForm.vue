@@ -123,7 +123,7 @@ async function getCountryList(){
     
     let url = `http://api.currencylayer.com/list?access_key=0d22cd5d805982af3de3305302905bab`;
     
-    fetch(url).then(response => response.json()).then(result =>{
+    fetch(url,{mode: 'no-cors',}).then(response => response.json()).then(result =>{
         currencyCodes.value = Object.keys(result.currencies);
         currencyCode.value = Object.entries(result.currencies)
         console.log(result.currencies);
