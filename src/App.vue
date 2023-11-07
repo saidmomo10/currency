@@ -3,7 +3,8 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-  
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
 
   <RouterView />
 </template>

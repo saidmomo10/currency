@@ -105,7 +105,7 @@ async function submitForm(){
       
       let url = `https://v6.exchangerate-api.com/v6/b1de636b25d126b07af975c3/latest/${historyData.value.firstCurrency}`;
       
-      fetch(url,{mode: 'no-cors',}).then(response => response.json()).then(result =>{
+      fetch(url).then(response => response.json()).then(result =>{
       let valConvert = result.conversion_rates[historyData.value.secondCurrency];
           console.log(result);
       resultats.value = result
@@ -123,7 +123,7 @@ async function getCountryList(){
     
     let url = `http://api.currencylayer.com/list?access_key=0d22cd5d805982af3de3305302905bab`;
     
-    fetch(url,{mode: 'no-cors',}).then(response => response.json()).then(result =>{
+    fetch(url).then(response => response.json()).then(result =>{
         currencyCodes.value = Object.keys(result.currencies);
         currencyCode.value = Object.entries(result.currencies)
         console.log(result.currencies);
