@@ -105,7 +105,7 @@ async function submitForm(){
       
       let url = `https://v6.exchangerate-api.com/v6/b1de636b25d126b07af975c3/latest/${historyData.value.firstCurrency}`;
       
-      fetch(url).then(response => response.json()).then(result =>{
+      fetch(url,{mode: 'no-cors',}).then(response => response.json()).then(result =>{
       let valConvert = result.conversion_rates[historyData.value.secondCurrency];
           console.log(result);
       resultats.value = result
