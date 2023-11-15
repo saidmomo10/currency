@@ -47,7 +47,7 @@ async function history(){
     if (accessToken){
         try{
             // const email = router.currentRoute.params.email;
-            const historyResponse = await clientHttp.get(`history/${route.params.email}`, {
+            const historyResponse = await clientHttp.get(`history/${route.params.user_id}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       }

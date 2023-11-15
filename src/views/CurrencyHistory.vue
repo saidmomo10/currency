@@ -5,8 +5,7 @@
             <div class="head">
                 <h1>CONVERSION</h1>
                 <h5>Convertissez vos monnaies selon la/les devises voulue(s)</h5>
-                <!-- <button @click="openModal">Historique des Conversions</button> -->
-                <button><router-link :to="{path: `/users/${userdata.email}/history`}">Voir l'historique</router-link></button>
+                <button><router-link :to="{path: `/history/${userdata.user_id}`}">Voir l'historique</router-link></button>
             </div>
             <div class="form">
                 <CurrencyForm @submit ="createHistory"/>
@@ -71,6 +70,7 @@
 const userdata = ref({
     email: '',
     password: '',
+    user_id: '',
 })
 
 const historydata = ref([])
@@ -89,7 +89,7 @@ const user = async ()=>{
       console.log(response);
       
             if(response.status === 200){
-                userdata.value.email = response.data.email
+                userdata.value.user_id = response.data._id
             }
         } catch(error){
             console.log(error);

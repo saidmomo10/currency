@@ -4,7 +4,6 @@ import Login from '../views/Login.vue'
 import SignUp from '../views/SignUp.vue'
 import UserPage from '../views/UserPage.vue'
 import CurrencyHistory from '../views/CurrencyHistory.vue'
-import CurrencyPage from '../views/CurrencyPage.vue'
 import History from '../views/History.vue'
 
 
@@ -45,14 +44,7 @@ const router = createRouter({
     },
 
     {
-      path: '/CurrencyPage',
-      name: 'currencyPage',
-      component: CurrencyPage,
-      meta:{requiresAuth: true}
-    },
-
-    {
-      path: '/users/:email/history',
+      path: '/history/:user_id',
       component: History,
     },
     

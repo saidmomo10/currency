@@ -2,26 +2,29 @@ var express = require('express');
 const router = express.Router();
 const History = require('../historyModel');
 const User  = require('../userModel');
-router.get('/histories', async (req, res) => {
-  try{
-    const histories = await History.find().populate("user");
-    res.json(histories);
-  }catch(err){
-    console.error(err);
-    res.status(500).json({ error: 'Erreur lors de la récupération des données.' });
-  }
-})
+// router.get('/histories', async (req, res) => {
+//   try{
+//     const histories = await History.find().populate("user");
+//     res.json(histories);
+//   }catch(err){
+//     console.error(err);
+//     res.status(500).json({ error: 'Erreur lors de la récupération des données.' });
+//   }
+// })
 
-router.post('/history/:email', async (req, res) => {
+router.post('/history/:user_id', async (req, res) => {
   try{
     const user_id = req.params.user_id;
     const {departValue, firstCurrency, secondCurrency} = req.body;
+    if(!user_id){
+      res.status(404).send({msg: "Session expirée"})
+    }
 
     const newHistory = new History({
-      departValue: departValue,
-      firstCurrency: firstCurrency,
-      secondCurrency: secondCurrency,
-      user_id: user_id,
+      departValue,
+      firstCurrency,
+      secondCurrency,
+      user_id,
     })
     const addHistory = await newHistory.save();
     res.status(200).send(addHistory);
@@ -31,7 +34,7 @@ router.post('/history/:email', async (req, res) => {
   }
 })
 
-router.get('/history/:email', async (req, res) => {
+router.get('/history/:user_id', async (req, res) => {
   try{
     const user_id = req.params.user_id;
     const histories = await History.find({user_id: user_id});

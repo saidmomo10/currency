@@ -144,7 +144,7 @@ user()
 }
 
 .banner__btn a:hover{
-background-color: #5C699E;
+background-color: #f8ab40;
 ;
 }
 

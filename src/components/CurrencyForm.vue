@@ -20,7 +20,7 @@ const historyData = ref({
   departValue: "",
   firstCurrency: "",
   secondCurrency: "",
-  userId: "",
+  user_id: "",
 })
 
 const equal = ref('')
@@ -30,26 +30,45 @@ const total = ref("");
 const resultat = ref([]);
 let error = ref('');
 
+const accessToken = localStorage.getItem('accessToken');
+
+
+async function user(){
+    if (accessToken){
+        try{
+            const response = await clientHttp.get('/UserPage', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      }
+      })
+      console.log(response);
+      
+            if(response.status === 200){
+                historyData.value.user_id = response.data._id
+                const id = historyData.value.user_id
+
+            }
+        } catch(error){
+            console.log(error);
+            
+        }
+    }
+}
+user()
+// const user_id = route.params.id
 
 async function submitForm(){
+  await user();
   if (!historyData.value.departValue && !historyData.value.firstCurrency && !historyData.value.secondCurrency) {
     error.value = 'Veuillez remplir tous les champs';
     return;
   }
 
   emits ('submit', historyData.value)
-  const accessToken = localStorage.getItem('accessToken');
-
   getvalConvert()
 
-  const response = await clientHttp.get('/Userpage',{
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      }
-    })
-
   try {
-      const history = await clientHttp.post(`/history/${route.params.email}`, historyData.value)
+      const history = await clientHttp.post(`/history/${historyData.value.user_id}`, historyData.value)
       console.log(history);
       equal.value = '='
       // localStorage.setItem('accessToken', history.data.accessToken);
@@ -57,6 +76,8 @@ async function submitForm(){
       console.log(error);
   }
 }
+
+
 
 
 
@@ -117,11 +138,10 @@ async function submitForm(){
       });
     }
 
-getvalConvert()
 
 async function getCountryList(){
     
-    let url = `https://api.currencylayer.com/list?access_key=0d22cd5d805982af3de3305302905bab`;
+  let url = `http://api.currencylayer.com/list?access_key=0d22cd5d805982af3de3305302905bab`;
     
     fetch(url).then(response => response.json()).then(result =>{
         currencyCodes.value = Object.keys(result.currencies);
@@ -179,8 +199,7 @@ const isModalOpen = ref(false);
           <p> {{ total }} {{ historyData.secondCurrency }}</p>
         </div>
         <div class="infos">
-          <p>Informations sur la devise de base <span style="color: #D47C00;">{{ resultats.base_code }}</span></p>
-          <h3></h3>
+          <p>Informations sur la devise de base <span style="color: #505F98;">{{ resultats.base_code }}</span></p>
           <p>Heure UTC de la dernière mise à jour : {{ resultats.time_last_update_utc }}</p>
           <p>Heure UTC de la dernière mise à jour : {{ resultats.time_next_update_utc }}</p>
           <p>Taux de change en temps réel</p>
@@ -286,6 +305,7 @@ const isModalOpen = ref(false);
   .result p{
     font-size: 50px;
     font-weight: 900;
+    color: #505F98;
   }
 
   .result h4{
@@ -309,7 +329,7 @@ const isModalOpen = ref(false);
     z-index: 100;
     border-right:none;
     transition: 3s;
-    border: solid #f8ab40 3px;
+    border: solid #505F98 3px;
     overflow: scroll;
 }
 #active{
@@ -336,7 +356,8 @@ const isModalOpen = ref(false);
     content: '';
     width: 30px;
     height: 4px;
-    background-color: #444854;
+    background-color: #505F98;
+    border-radius: 30px;
     position: absolute;
     top: 50%;
     left: 50%; 

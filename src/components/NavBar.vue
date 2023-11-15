@@ -17,7 +17,6 @@ import LogoutButton from '../components/LogoutButton.vue';
                     <div class="header__menu">
                         <li class="header__menu__item"><a href="/UserPage">ACCUEIL</a></li>
                         <li class="header__menu__item"><a href="CurrencyHistory">CONVERTIR</a></li>
-                        <li class="header__menu__item"><a href="/CurrencyPage">TAUX RÉCENTS</a></li>
                     </div>
                     <div class="header__menu">
                         <li class="header__menu__item"><UserName/></li>

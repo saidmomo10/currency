@@ -38,3 +38,4 @@ npm run dev
 ```sh
 npm run build
 ```
+Le dossier New Project ici représente celui du back-end. Le dossier courant (front-end) et celui du back-end doivent être démarés séparément
